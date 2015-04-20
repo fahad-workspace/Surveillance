@@ -1,5 +1,5 @@
 class SurveillanceController < ApplicationController
-  
+
   def monitor
     # eg : https://github.com/fahad-workspace/Surveillance
     link = params[:repo]
@@ -11,5 +11,5 @@ class SurveillanceController < ApplicationController
       puts repo_name
     end
   end
-  
+
 end
