@@ -1,0 +1,11 @@
+%p{:id => "heading", :class => "pull-left"} Surveillance
+%p{:id => "heading", :class => "pull-right"} Your online GitHub monitoring tool
+#fork_me
+  %a{:href => "https://github.com/fahad-workspace/Surveillance", :target => '_blank'}
+    %img{:alt => "Fork me on GitHub", :src => "fork.png"}
+%form{:controller => "/surveillance", :action => "surveillance/monitor", :method => "post", :data => {:remote => "true"}}
+  %label{:class => "pull-left"} Put repository link in this pipe
+  %input.form-control{:type => "text", :name => "repo", :id=> "repo", :class => "pull-right", :placeholder => "Eg : https://github.com/fahad-workspace/Surveillance"}
+  %label{:class => "pull-left"} And smoke it
+  .pull-right
+    %input.btn{:type => "submit", :value => "Start Monitoring"}
