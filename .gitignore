@@ -67,5 +67,5 @@ config/environments/*.local.yml
 coverage
 coverage/**
 
-.sass-cache
-.sass-cache/**
+/app/assets/stylesheets/.sass-cache
+/app/assets/stylesheets/.sass-cache/**
