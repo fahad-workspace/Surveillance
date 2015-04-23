@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  match '*path' => redirect('/'), via: :get
+  # match '*path' => redirect('/'), via: :get
 
   # You can have the root of your site routed with "root"
   root 'surveillance#index'
@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   #   get 'products/:id' => 'catalog#view'
 
   post 'surveillance/monitor' => 'surveillance#monitor'
+  get 'surveillance/auth' => 'surveillance#auth'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
