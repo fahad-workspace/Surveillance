@@ -35,7 +35,7 @@ class SurveillanceController < ApplicationController
     github = Github.new client_id: Rails.application.config.github_client_id, client_secret: Rails.application.config.github_client_secret
     token = github.get_token( params["code"] )  
     github = Github.new oauth_token: token
-    redirect_to '/'
+    redirect_to request.base_url
   end
 
 end
