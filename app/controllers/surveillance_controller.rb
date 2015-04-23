@@ -26,9 +26,16 @@ class SurveillanceController < ApplicationController
   end
   
   def auth 
-    github = Github.new client_id: 'ab0f000ed4fb6f13a6c6', client_secret: '049d5ef30578afac88a79ea056e17ee23d2b5a41', scope: 'repo'
-    github.authorize_url scope: 'repo'
-    redirect_to github.authorize_url
+    github = Github.new client_id: Rails.application.config.github_client_id, client_secret: Rails.application.config.github_client_secret
+    url = github.authorize_url + "&scope=repo"
+    redirect_to url
+  end
+  
+  def login
+    github = Github.new client_id: Rails.application.config.github_client_id, client_secret: Rails.application.config.github_client_secret
+    token = github.get_token( params["code"] )  
+    github = Github.new oauth_token: token
+    redirect_to root_path
   end
 
 end
