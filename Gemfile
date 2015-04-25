@@ -56,7 +56,6 @@ end
 
 group :test, :production do
 
-  gem 'pg'
   gem 'puma'
 
 end
@@ -101,9 +100,5 @@ end
 
 gem 'mysql2'
 gem 'haml-rails'
-gem 'devise'
 gem 'bootstrap-sass'
-gem 'cancan'
-gem 'rails_admin'
 gem 'github_api'
-gem 'octokit'
