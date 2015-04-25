@@ -54,12 +54,6 @@ group :development, :test do
 
 end
 
-group :test, :production do
-
-  gem 'puma'
-
-end
-
 group :development do
 
   # Use Capistrano for deployment
