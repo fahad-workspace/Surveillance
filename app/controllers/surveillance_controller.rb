@@ -20,6 +20,7 @@ class SurveillanceController < ApplicationController
   end
   
   def auth
+    github_config
     url = Github.new.authorize_url + "&scope=repo"
     redirect_to url
   end
