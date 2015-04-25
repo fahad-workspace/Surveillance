@@ -177,6 +177,7 @@ GEM
       rack (~> 1.2)
     parser (2.2.0.4)
       ast (>= 1.1, < 3.0)
+    pg (0.18.1)
     procto (0.0.2)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -356,6 +357,7 @@ DEPENDENCIES
   mailcatcher
   meta_request
   mysql2
+  pg
   pry
   puma
   quiet_assets

@@ -18,24 +18,24 @@ class SurveillanceController < ApplicationController
       end
     end
   end
-  
+
   def auth
     github_config
     url = Github.new.authorize_url + "&scope=repo"
     redirect_to url
   end
-  
+
   def login
-    @oauth_token = Github.new.get_token( params["code"] )
+    @oauth_token = Github.new.get_token(params["code"])
     session["access_token"] = JSON.parse(@oauth_token.to_json)['access_token']
     redirect_to request.base_url
   end
-  
+
   def signout
     session["access_token"] = nil
     redirect_to request.base_url
   end
-  
+
   private
   def github_config
     Github.configure do |c|

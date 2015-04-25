@@ -21,9 +21,5 @@ test:
   database: db_test
 
 production:
-  adapter: mysql2
-  username: SurveillanceUser
-  password: SurveillancePassword
-  host: localhost
-  pool: 5
-  timeout: 5000
+  <<: *default
+  database: db_production

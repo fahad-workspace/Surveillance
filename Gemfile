@@ -57,6 +57,7 @@ end
 group :test, :production do
 
   gem 'puma'
+  gem 'pg'
 
 end
 

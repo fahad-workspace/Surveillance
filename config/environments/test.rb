@@ -11,7 +11,7 @@ Rails.application.configure do
   # just for the purpose of running a single test. If you are using a tool that
   # preloads Rails for running tests, you may have to set it to true.
   config.eager_load = false
-  
+
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = true
 
@@ -46,8 +46,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-  
+
   config.github_client_id = "891a0fcb6bc595a3f426"
   config.github_client_secret = "4d7046ac6c009df36f8b8f8818494cbe26ea02bf"
-  
+
 end
