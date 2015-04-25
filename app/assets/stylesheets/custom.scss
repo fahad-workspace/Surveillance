@@ -107,7 +107,7 @@ input, input.form-control {
 .pull-left {
   width: 30%;
   font-family: 'georgia', 'bitstream vera serif', serif;
-  font-size: 30px;
+  font-size: 25px;
   text-align: left;
   color: black;
   position: relative;
@@ -124,11 +124,11 @@ input, input.form-control {
 }
 
 .pull-left#heading {
-  font-size: 60px;
+  font-size: 50px;
 }
 
 .pull-right#heading {
-  font-size: 30px;
+  font-size: 25px;
   word-spacing: 9999999px;
   text-transform: uppercase;
 }
@@ -138,4 +138,8 @@ input, input.form-control {
   border-radius: 4px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
   font-weight: bold;
+}
+
+.container {
+  padding: 40px 20px 40px 20px;
 }
