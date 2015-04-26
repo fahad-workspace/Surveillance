@@ -1,0 +1,28 @@
+%p{:id => "heading"} Surveillance
+.flash
+  - flash.each do |name, msg|
+    %br
+    = content_tag :div, msg, id: "flash_#{name}"
+    %br
+- if @repo_list
+  %b User:
+  = @user
+  %br
+  %br
+  - if @repo_list.length > 0
+    %b Repo Count:
+    = @repo_list.count
+    %br
+    %br
+    %b Repo Names:
+    %br
+    %br
+    - @repo_list.each do |repo|
+      %b &#8226
+      = repo.name
+      has
+      = repo.open_issues_count
+      issues
+      %br
+  - else
+    No existing repository!

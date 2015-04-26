@@ -1,9 +1,24 @@
+.pull-right
+  - if current_user
+    .auth_div
+      Signed in with GitHub:
+      = link_to "Sign out", {controller: '/surveillance', action: 'signout'}
+  - else
+    .auth_div
+      Sign in with GitHub:
+      = link_to "Public", {controller: '/surveillance', action: 'auth', repo: "public"}
+      or
+      = link_to "Private", {controller: '/surveillance', action: 'auth', repo: "private"}
+  .flash
+    - flash.each do |name, msg|
+      %br
+      = content_tag :div, msg, id: "flash_#{name}"
 %p{:id => "heading", :class => "pull-left"} Surveillance
 %p{:id => "heading", :class => "pull-right"} Your online GitHub monitoring tool
 #fork
   %a{:href => "https://github.com/fahad-workspace/Surveillance", :target => '_blank'}
     %img{:alt => "Fork me on GitHub", :src => "fork.png"}
-%form{:controller => "/surveillance", :action => "surveillance/monitor", :method => "post", :data => {:remote => "true"}}
+%form{:target => "_blank", :controller => "/surveillance", :action => "surveillance/monitor", :method => "post"}
   %label{:class => "pull-left"} Put repository link in this pipe
   %input.form-control{:type => "text", :name => "repo", :id=> "repo", :class => "pull-right", :placeholder => "Eg : https://github.com/fahad-workspace/Surveillance"}
   %label{:class => "pull-left"} And smoke it

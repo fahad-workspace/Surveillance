@@ -9,11 +9,4 @@
     %meta{:content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no", :name => "viewport"}
   %body
     %div{:class => "container"}
-      .pull-right
-        - if current_user
-          %div
-            = link_to "Sign out from Surveillance", {controller: '/surveillance', action: 'signout'}, alt: "HELLO"
-        - else
-          %div
-            = link_to "Sign in with GitHub", {controller: '/surveillance', action: 'auth'}, alt: "HELLO"
       = yield

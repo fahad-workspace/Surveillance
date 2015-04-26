@@ -2,11 +2,12 @@ body {
   background: image-url("background.jpg") no-repeat center center fixed;
   background-color: #ECECEC;
   color: #666;
-  font-family: 'Lucida Grande', 'Lucida Sans', Tahoma, Ubuntu sans-serif;
-  font-size: 100%;
+  font-family: 'georgia', 'bitstream vera serif', serif;
   line-height: 1.25;
   margin: 0;
   padding: 0;
+  font-size: 15px;
+  text-align: justify;
 }
 
 #fork {
@@ -49,12 +50,12 @@ h3 code {
 
 a {
   color: #000;
-  text-decoration: underline;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 a:hover {
   color: #910;
-  text-decoration: underline;
 }
 
 a img {
@@ -106,7 +107,6 @@ input, input.form-control {
 
 .pull-left {
   width: 30%;
-  font-family: 'georgia', 'bitstream vera serif', serif;
   font-size: 25px;
   text-align: left;
   color: black;
@@ -118,19 +118,22 @@ input, input.form-control {
 .pull-right {
   width: 70%;
   position: relative;
-  font-family: 'georgia', 'bitstream vera serif', serif;
   font-size: 15px;
-  text-align: left;
+  padding-right: 75px;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
-.pull-left#heading {
+#heading {
   font-size: 50px;
+  color: black;
 }
 
 .pull-right#heading {
   font-size: 25px;
   word-spacing: 9999999px;
   text-transform: uppercase;
+  color: #666;
 }
 
 .btn {
@@ -142,4 +145,8 @@ input, input.form-control {
 
 .container {
   padding: 40px 20px 40px 20px;
+}
+
+.flash {
+  color: red;
 }

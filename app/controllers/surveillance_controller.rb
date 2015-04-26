@@ -1,5 +1,7 @@
 class SurveillanceController < ApplicationController
 
+  skip_before_filter :verify_authenticity_token, :only => [:monitor]
+
   def monitor
     # eg : https://github.com/fahad-workspace/Surveillance
     link = params[:repo]
@@ -7,53 +9,56 @@ class SurveillanceController < ApplicationController
       @user = link.split('/')[3]
       @repo = link.split('/')[4]
       @repo = @repo.split('.')[0]
-      @oauth_token = session["access_token"]
-      puts @user
-      puts @repo
       github_config
-      repo_list = Github.repos.list
-      puts "Repo Count: #{repo_list.count}"
-      repo_list.each do |repo|
-        puts repo.name
+      begin
+        @repo_list = Github.repos.list
+      rescue Github::Error::GithubError => e
+        flash[:error] = e.message
+      end
+    else
+      if link.length == 0
+        flash.now[:error] = "No repository link provided!"
+      else
+        flash.now[:error] = "Invalid repository link provided!"
       end
     end
   end
 
   def auth
     github_config
-    url = Github.new.authorize_url + "&scope=repo"
+    url = Github.new.authorize_url
+    if params[:repo] == "private"
+      url = url + "&scope=repo"
+    end
     redirect_to url
   end
 
   def login
-    @oauth_token = Github.new.get_token(params["code"])
-    session["access_token"] = JSON.parse(@oauth_token.to_json)['access_token']
-    redirect_to request.base_url
+    token = Github.new.get_token(params["code"])
+    session["access_token"] = token.token
+    github_config
+    redirect_to request.base_url, notice: "Signed in!"
   end
 
   def signout
     session["access_token"] = nil
-    redirect_to request.base_url
+    redirect_to request.base_url, notice: "Signed out!"
   end
 
   private
   def github_config
     Github.configure do |c|
-      puts "THIS IS CALLED"
       c.auto_pagination = true
       c.client_id = Rails.application.config.github_client_id
       c.client_secret = Rails.application.config.github_client_secret
-      if @oauth_token != nil
-        c.oauth_token = @oauth_token
-        puts "OAUTH: #{@oauth_token}"
+      if session["access_token"] != nil
+        c.oauth_token = session["access_token"]
       end
       if @user != nil
         c.user = @user
-        puts "USER: #{@user}"
       end
       if @repo != nil
         c.repo = @repo
-        puts "REPO: #{@repo}"
       end
     end
   end
