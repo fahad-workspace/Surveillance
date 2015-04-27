@@ -1,18 +1,17 @@
 .pull-right
-  - if current_user
-    .auth_div
+  .auth_div
+    - if current_user
       Signed in with GitHub:
       = link_to "Sign out", {controller: '/surveillance', action: 'signout'}
-  - else
-    .auth_div
+    - else
       Sign in with GitHub:
       = link_to "Public", {controller: '/surveillance', action: 'auth', repo: "public"}
       or
       = link_to "Private", {controller: '/surveillance', action: 'auth', repo: "private"}
-  .flash
-    - flash.each do |name, msg|
-      %br
-      = content_tag :div, msg, id: "flash_#{name}"
+    .flash
+      - flash.each do |name, msg|
+        %br
+        = content_tag :div, msg, id: "flash_#{name}"
 %p{:id => "heading", :class => "pull-left"} Surveillance
 %p{:id => "heading", :class => "pull-right"} Your online GitHub monitoring tool
 #fork
