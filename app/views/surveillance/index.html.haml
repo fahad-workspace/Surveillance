@@ -20,7 +20,8 @@
     %img{:alt => "Fork me on GitHub", :src => "fork.png"}
 %form{:target => "_blank", :controller => "/surveillance", :action => "surveillance/monitor", :method => "post"}
   %label{:class => "pull-left"} Put repository link in this pipe
-  %input.form-control{:type => "text", :name => "repo", :id=> "repo", :class => "pull-right", :placeholder => "Eg : https://github.com/fahad-workspace/Surveillance"}
+  .pull-right
+    %input.form-control{:type => "text", :name => "repo", :id=> "repo", :class => "pull-right", :placeholder => "Eg : https://github.com/fahad-workspace/Surveillance"}
   %label{:class => "pull-left"} And smoke it
   .pull-right
     %input.btn{:type => "submit", :value => "Start Monitoring"}

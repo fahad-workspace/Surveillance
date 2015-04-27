@@ -7,7 +7,6 @@ body {
   margin: 0;
   padding: 0;
   font-size: 15px;
-  text-align: justify;
 }
 
 #fork {
@@ -119,9 +118,13 @@ input, input.form-control {
   width: 70%;
   position: relative;
   font-size: 15px;
-  padding-right: 75px;
-  text-align: justify;
+  padding-right: 120px;
   text-justify: inter-word;
+}
+
+input.pull-right {
+  padding: 5px 10px 5px 10px;
+  width: 100%;
 }
 
 #heading {
@@ -149,4 +152,5 @@ input, input.form-control {
 
 .flash {
   color: red;
+  text-align: justify;
 }
