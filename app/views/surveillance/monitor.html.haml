@@ -14,15 +14,7 @@
     = @repo_list.count
     %br
     %br
-    %b Repo Names:
+    = content_tag :div, '', id: 'repo_chart', height: 500, data: {repo: @repo_list}
     %br
-    %br
-    - @repo_list.each do |repo|
-      %b &#8226
-      = repo.name
-      has
-      = repo.open_issues_count
-      issues
-      %br
   - else
     No existing repository!
