@@ -12,6 +12,10 @@ class SurveillanceController < ApplicationController
       github_config
       begin
         @repo_list = Github.repos.list
+        # @commits = Github.repos.commits.list @user, @repo
+        # @commits.each do |commit|
+        #   puts commit.commit.message
+        # end
       rescue Github::Error::GithubError => e
         flash[:error] = e.message
       end

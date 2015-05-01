@@ -7045,14 +7045,15 @@
             return this;
         };
         R._engine.create = function () {
-            var con = R._getContainer.apply(0, arguments),
-                container = con && con.container,
-                x = con.x,
-                y = con.y,
-                width = con.width,
-                height = con.height;
-            if (!container) {
-                throw new Error("SVG container not found.");
+            try {
+                var con = R._getContainer.apply(0, arguments),
+                    container = con && con.container,
+                    x = con.x,
+                    y = con.y,
+                    width = con.width,
+                    height = con.height;
+            }
+            catch(exp) {
             }
             var cnvs = $("svg"),
                 css = "overflow:hidden;",
@@ -7074,10 +7075,14 @@
                 isFloating = 1;
             } else {
                 cnvs.style.cssText = css + "position:relative";
-                if (container.firstChild) {
-                    container.insertBefore(cnvs, container.firstChild);
-                } else {
-                    container.appendChild(cnvs);
+                try {
+                    if (container.firstChild) {
+                        container.insertBefore(cnvs, container.firstChild);
+                    } else {
+                        container.appendChild(cnvs);
+                    }
+                }
+                catch(exp) {
                 }
             }
             container = new R._Paper;
