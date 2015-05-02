@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    if session["access_token"] != nil
-      @current_user = session["access_token"]
+    if session['access_token'] != nil
+      @current_user = session['access_token']
     end
   end
 

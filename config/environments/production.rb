@@ -77,7 +77,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.github_client_id = "ab0f000ed4fb6f13a6c6"
-  config.github_client_secret = "049d5ef30578afac88a79ea056e17ee23d2b5a41"
+  config.github_client_id = 'ab0f000ed4fb6f13a6c6'
+  config.github_client_secret = '049d5ef30578afac88a79ea056e17ee23d2b5a41'
 
 end

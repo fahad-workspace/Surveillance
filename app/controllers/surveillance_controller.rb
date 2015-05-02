@@ -21,9 +21,9 @@ class SurveillanceController < ApplicationController
       end
     else
       if link.length == 0
-        flash.now[:error] = "No repository link provided!"
+        flash.now[:error] = 'No repository link provided!'
       else
-        flash.now[:error] = "Invalid repository link provided!"
+        flash.now[:error] = 'Invalid repository link provided!'
       end
     end
   end
@@ -31,22 +31,22 @@ class SurveillanceController < ApplicationController
   def auth
     github_config
     url = Github.new.authorize_url
-    if params[:repo] == "private"
-      url = url + "&scope=repo"
+    if params[:repo] == 'private'
+      url = url + '&scope=repo'
     end
     redirect_to url
   end
 
   def login
-    token = Github.new.get_token(params["code"])
-    session["access_token"] = token.token
+    token = Github.new.get_token(params['code'])
+    session['access_token'] = token.token
     github_config
-    redirect_to request.base_url, notice: "Signed in!"
+    redirect_to request.base_url, notice: 'Signed in!'
   end
 
   def signout
-    session["access_token"] = nil
-    redirect_to request.base_url, notice: "Signed out!"
+    session['access_token'] = nil
+    redirect_to request.base_url, notice: 'Signed out!'
   end
 
   private
@@ -55,8 +55,8 @@ class SurveillanceController < ApplicationController
       c.auto_pagination = true
       c.client_id = Rails.application.config.github_client_id
       c.client_secret = Rails.application.config.github_client_secret
-      if session["access_token"] != nil
-        c.oauth_token = session["access_token"]
+      if session['access_token'] != nil
+        c.oauth_token = session['access_token']
       end
       if @user != nil
         c.user = @user
