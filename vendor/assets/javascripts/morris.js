@@ -21,11 +21,11 @@
             return child;
         },
         __indexOf = [].indexOf || function (item) {
-                for (var i = 0, l = this.length; i < l; i++) {
-                    if (i in this && this[i] === item) return i;
-                }
-                return -1;
-            };
+            for (var i = 0, l = this.length; i < l; i++) {
+                if (i in this && this[i] === item) return i;
+            }
+            return -1;
+        };
 
     Morris = window.Morris = {};
 
@@ -1043,7 +1043,9 @@
             };
             if (this.options.parseTime) {
                 if (this.data.length === 1 && this.options.xLabels === 'auto') {
-                    labels = [[this.data[0].label, this.data[0].x]];
+                    labels = [
+                        [this.data[0].label, this.data[0].x]
+                    ];
                 } else {
                     labels = Morris.labelSeries(this.xmin, this.xmax, this.width, this.options.xLabels, this.options.xLabelFormat);
                 }
@@ -1137,7 +1139,10 @@
             }
             a = (datapoints * sum_xy - sum_x * sum_y) / (datapoints * sum_xx - sum_x * sum_x);
             b = (sum_y / datapoints) - ((a * sum_x) / datapoints);
-            data = [{}, {}];
+            data = [
+                {},
+                {}
+            ];
             data[0].x = this.transX(this.data[0].x);
             data[0].y = this.transY(this.data[0].x * a + b);
             data[1].x = this.transX(this.data[this.data.length - 1].x);

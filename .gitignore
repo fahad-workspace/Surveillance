@@ -20,7 +20,9 @@
 capybara-*.html
 .rspec
 /log
+/log/**
 /tmp
+/tmp/**
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /public/system
@@ -54,18 +56,36 @@ bower.json
 
 .DS_Store
 *~*
+*~
+#*
+CVS
+*.bak
+*.pyo
+*.pyc
+.svn
+.hg
+.bzr
+.komodotools
+.tools
+__pycache__
+hg-checklink-*
+hg-checkexec-*
+.localized
+.keep
+.idea
+.idea/**
+.git
+.git/**
+
+coverage
+coverage/**
 
 config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
 
-.keep
-
-.idea
-.idea/**
-
-coverage
-coverage/**
-
 /app/assets/stylesheets/.sass-cache
 /app/assets/stylesheets/.sass-cache/**
+
+/vendor/assets/stylesheets/.sass-cache
+/vendor/assets/stylesheets/.sass-cache/**

@@ -602,15 +602,38 @@
         },
         rectPath = R._rectPath = function (x, y, w, h, r) {
             if (r) {
-                return [["M", x + r, y], ["l", w - r * 2, 0], ["a", r, r, 0, 0, 1, r, r], ["l", 0, h - r * 2], ["a", r, r, 0, 0, 1, -r, r], ["l", r * 2 - w, 0], ["a", r, r, 0, 0, 1, -r, -r], ["l", 0, r * 2 - h], ["a", r, r, 0, 0, 1, r, -r], ["z"]];
+                return [
+                    ["M", x + r, y],
+                    ["l", w - r * 2, 0],
+                    ["a", r, r, 0, 0, 1, r, r],
+                    ["l", 0, h - r * 2],
+                    ["a", r, r, 0, 0, 1, -r, r],
+                    ["l", r * 2 - w, 0],
+                    ["a", r, r, 0, 0, 1, -r, -r],
+                    ["l", 0, r * 2 - h],
+                    ["a", r, r, 0, 0, 1, r, -r],
+                    ["z"]
+                ];
             }
-            return [["M", x, y], ["l", w, 0], ["l", 0, h], ["l", -w, 0], ["z"]];
+            return [
+                ["M", x, y],
+                ["l", w, 0],
+                ["l", 0, h],
+                ["l", -w, 0],
+                ["z"]
+            ];
         },
         ellipsePath = function (x, y, rx, ry) {
             if (ry == null) {
                 ry = rx;
             }
-            return [["M", x, y], ["m", 0, -ry], ["a", rx, ry, 0, 1, 1, 0, 2 * ry], ["a", rx, ry, 0, 1, 1, 0, -2 * ry], ["z"]];
+            return [
+                ["M", x, y],
+                ["m", 0, -ry],
+                ["a", rx, ry, 0, 1, 1, 0, 2 * ry],
+                ["a", rx, ry, 0, 1, 1, 0, -2 * ry],
+                ["z"]
+            ];
         },
         getPath = R._getPath = {
             path: function (el) {
@@ -1117,10 +1140,10 @@
         V = mmax(r, g, b);
         C = V - mmin(r, g, b);
         H = (C == 0 ? null :
-            V == r ? (g - b) / C :
+                V == r ? (g - b) / C :
                 V == g ? (b - r) / C + 2 :
-                (r - g) / C + 4
-        );
+            (r - g) / C + 4
+            );
         H = ((H + 360) % 6) * 60 / 360;
         S = C == 0 ? 0 : C / V;
         return {h: H, s: S, b: V, toString: hsbtoString};
@@ -1152,13 +1175,13 @@
         m = mmin(r, g, b);
         C = M - m;
         H = (C == 0 ? null :
-            M == r ? (g - b) / C :
+                M == r ? (g - b) / C :
                 M == g ? (b - r) / C + 2 :
-                (r - g) / C + 4);
+            (r - g) / C + 4);
         H = ((H + 360) % 6) * 60 / 360;
         L = (M + m) / 2;
         S = (C == 0 ? 0 :
-            L < .5 ? C / (2 * L) :
+                L < .5 ? C / (2 * L) :
             C / (2 - 2 * L));
         return {h: H, s: S, l: L, toString: hsltoString};
     };
@@ -1406,10 +1429,10 @@
                 }
             }
             d.push(["C",
-                (-p[0].x + 6 * p[1].x + p[2].x) / 6,
-                (-p[0].y + 6 * p[1].y + p[2].y) / 6,
-                (p[1].x + 6 * p[2].x - p[3].x) / 6,
-                (p[1].y + 6 * p[2].y - p[3].y) / 6,
+                    (-p[0].x + 6 * p[1].x + p[2].x) / 6,
+                    (-p[0].y + 6 * p[1].y + p[2].y) / 6,
+                    (p[1].x + 6 * p[2].x - p[3].x) / 6,
+                    (p[1].y + 6 * p[2].y - p[3].y) / 6,
                 p[2].x,
                 p[2].y
             ]);
@@ -1723,7 +1746,7 @@
             mmin(x1, x2) > mmax(x3, x4) ||
             mmax(y1, y2) < mmin(y3, y4) ||
             mmin(y1, y2) > mmax(y3, y4)
-        ) {
+            ) {
             return;
         }
         var nx = (x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4),
@@ -1746,7 +1769,7 @@
             py2 > +mmax(y1, y2).toFixed(2) ||
             py2 < +mmin(y3, y4).toFixed(2) ||
             py2 > +mmax(y3, y4).toFixed(2)
-        ) {
+            ) {
             return;
         }
         return {x: px, y: py};
@@ -1916,7 +1939,10 @@
     R.isPointInsidePath = function (path, x, y) {
         var bbox = R.pathBBox(path);
         return R.isPointInsideBBox(bbox, x, y) &&
-            interPathHelper(path, [["M", x, y], ["H", bbox.x2 + 10]], 1) % 2 == 1;
+            interPathHelper(path, [
+                ["M", x, y],
+                ["H", bbox.x2 + 10]
+            ], 1) % 2 == 1;
     };
     R._removedFactory = function (methodname) {
         return function () {
@@ -2085,7 +2111,9 @@
                 pathArray = R.parsePathString(pathArray);
             }
             if (!pathArray || !pathArray.length) {
-                return [["M", 0, 0]];
+                return [
+                    ["M", 0, 0]
+                ];
             }
             var res = [],
                 x = 0,
@@ -2180,10 +2208,10 @@
             var _13 = 1 / 3,
                 _23 = 2 / 3;
             return [
-                _13 * x1 + _23 * ax,
-                _13 * y1 + _23 * ay,
-                _13 * x2 + _23 * ax,
-                _13 * y2 + _23 * ay,
+                    _13 * x1 + _23 * ax,
+                    _13 * y1 + _23 * ay,
+                    _13 * x2 + _23 * ax,
+                    _13 * y2 + _23 * ay,
                 x2,
                 y2
             ];
@@ -2721,7 +2749,7 @@
                 if ((tt1[0] != tt2[0]) ||
                     (tt1[0].toLowerCase() == "r" && (tt1[2] != tt2[2] || tt1[3] != tt2[3])) ||
                     (tt1[0].toLowerCase() == "s" && (tt1[3] != tt2[3] || tt1[4] != tt2[4]))
-                ) {
+                    ) {
                     return;
                 }
                 from[i] = [];
@@ -2844,13 +2872,29 @@
          - matrix (object) @Matrix
          \*/
         matrixproto.add = function (a, b, c, d, e, f) {
-            var out = [[], [], []],
-                m = [[this.a, this.c, this.e], [this.b, this.d, this.f], [0, 0, 1]],
-                matrix = [[a, c, e], [b, d, f], [0, 0, 1]],
+            var out = [
+                    [],
+                    [],
+                    []
+                ],
+                m = [
+                    [this.a, this.c, this.e],
+                    [this.b, this.d, this.f],
+                    [0, 0, 1]
+                ],
+                matrix = [
+                    [a, c, e],
+                    [b, d, f],
+                    [0, 0, 1]
+                ],
                 x, y, z, res;
 
             if (a && a instanceof Matrix) {
-                matrix = [[a.a, a.c, a.e], [a.b, a.d, a.f], [0, 0, 1]];
+                matrix = [
+                    [a.a, a.c, a.e],
+                    [a.b, a.d, a.f],
+                    [0, 0, 1]
+                ];
             }
 
             for (x = 0; x < 3; x++) {
@@ -2970,7 +3014,7 @@
         };
         matrixproto.toString = function () {
             return R.svg ?
-            "matrix(" + [this.get(0), this.get(1), this.get(2), this.get(3), this.get(4), this.get(5)].join() + ")" :
+                "matrix(" + [this.get(0), this.get(1), this.get(2), this.get(3), this.get(4), this.get(5)].join() + ")" :
                 [this.get(0), this.get(2), this.get(1), this.get(3), 0, 0].join();
         };
         matrixproto.toFilter = function () {
@@ -3012,7 +3056,10 @@
             out.dy = this.f;
 
             // scale and shear
-            var row = [[this.a, this.c], [this.b, this.d]];
+            var row = [
+                [this.a, this.c],
+                [this.b, this.d]
+            ];
             out.scalex = math.sqrt(norm(row[0]));
             normalize(row[0]);
 
@@ -4546,7 +4593,9 @@
                                         return +from[attr][i] + pos * ms * diff[attr][i];
                                     };
                                     // now = [["r", get(2), 0, 0], ["t", get(3), get(4)], ["s", get(0), get(1), 0, 0]];
-                                    now = [["m", get(0), get(1), get(2), get(3), get(4), get(5)]];
+                                    now = [
+                                        ["m", get(0), get(1), get(2), get(3), get(4), get(5)]
+                                    ];
                                 }
                                 break;
                             case "csv":
@@ -4871,12 +4920,12 @@
                                 extractTransform(to2, to[attr]);
                                 to[attr] = to2._.transform;
                                 diff[attr] = [
-                                    (to2.matrix.a - m.a) / ms,
-                                    (to2.matrix.b - m.b) / ms,
-                                    (to2.matrix.c - m.c) / ms,
-                                    (to2.matrix.d - m.d) / ms,
-                                    (to2.matrix.e - m.e) / ms,
-                                    (to2.matrix.f - m.f) / ms
+                                        (to2.matrix.a - m.a) / ms,
+                                        (to2.matrix.b - m.b) / ms,
+                                        (to2.matrix.c - m.c) / ms,
+                                        (to2.matrix.d - m.d) / ms,
+                                        (to2.matrix.e - m.e) / ms,
+                                        (to2.matrix.f - m.f) / ms
                                 ];
                                 // from[attr] = [_.sx, _.sy, _.deg, _.dx, _.dy];
                                 // var to2 = {_:{}, getBBox: function () { return element.getBBox(); }};
@@ -5851,7 +5900,7 @@
                             var dir = ((fy > .5) * 2 - 1);
                             pow(fx - .5, 2) + pow(fy - .5, 2) > .25 &&
                             (fy = math.sqrt(.25 - pow(fx - .5, 2)) * dir + .5) &&
-                            fy != .5 &&
+                                fy != .5 &&
                             (fy = fy.toFixed(5) - 1e-5 * dir);
                         }
                         return E;
@@ -6087,10 +6136,10 @@
                 if (value) {
                     var width = o.attrs["stroke-width"] || "1",
                         butt = {
-                                round: width,
-                                square: width,
-                                butt: 0
-                            }[o.attrs["stroke-linecap"] || params["stroke-linecap"]] || 0,
+                            round: width,
+                            square: width,
+                            butt: 0
+                        }[o.attrs["stroke-linecap"] || params["stroke-linecap"]] || 0,
                         dashes = [],
                         i = value.length;
                     while (i--) {
@@ -6533,7 +6582,9 @@
                 cx = bbox.x + bbox.width / 2;
                 cy = bbox.y + bbox.height / 2;
             }
-            this.transform(this._.transform.concat([["r", deg, cx, cy]]));
+            this.transform(this._.transform.concat([
+                ["r", deg, cx, cy]
+            ]));
             return this;
         };
         /*\
@@ -6569,7 +6620,9 @@
             }
             cx = cx == null ? bbox.x + bbox.width / 2 : cx;
             cy = cy == null ? bbox.y + bbox.height / 2 : cy;
-            this.transform(this._.transform.concat([["s", sx, sy, cx, cy]]));
+            this.transform(this._.transform.concat([
+                ["s", sx, sy, cx, cy]
+            ]));
             return this;
         };
         /*\
@@ -6593,7 +6646,9 @@
             }
             dx = toFloat(dx[0]) || 0;
             dy = +dy || 0;
-            this.transform(this._.transform.concat([["t", dx, dy]]));
+            this.transform(this._.transform.concat([
+                ["t", dx, dy]
+            ]));
             return this;
         };
         /*\
@@ -7053,7 +7108,7 @@
                     width = con.width,
                     height = con.height;
             }
-            catch(exp) {
+            catch (exp) {
             }
             var cnvs = $("svg"),
                 css = "overflow:hidden;",
@@ -7082,7 +7137,7 @@
                         container.appendChild(cnvs);
                     }
                 }
-                catch(exp) {
+                catch (exp) {
                 }
             }
             container = new R._Paper;
@@ -7468,9 +7523,9 @@
                             fill.src = E;
                             fill.type = "solid";
                             if (R.getRGB(params.fill).error && (res.type in {
-                                    circle: 1,
-                                    ellipse: 1
-                                } || Str(params.fill).charAt() != "r") && addGradientFill(res, params.fill, fill)) {
+                                circle: 1,
+                                ellipse: 1
+                            } || Str(params.fill).charAt() != "r") && addGradientFill(res, params.fill, fill)) {
                                 a.fill = "none";
                                 a.gradient = params.fill;
                                 fill.rotate = false;
@@ -7728,7 +7783,9 @@
                 cy = bbox.y + bbox.height / 2;
             }
             this._.dirtyT = 1;
-            this.transform(this._.transform.concat([["r", deg, cx, cy]]));
+            this.transform(this._.transform.concat([
+                ["r", deg, cx, cy]
+            ]));
             return this;
         };
         elproto.translate = function (dx, dy) {
@@ -7745,7 +7802,9 @@
                 this._.bbox.x += dx;
                 this._.bbox.y += dy;
             }
-            this.transform(this._.transform.concat([["t", dx, dy]]));
+            this.transform(this._.transform.concat([
+                ["t", dx, dy]
+            ]));
             return this;
         };
         elproto.scale = function (sx, sy, cx, cy) {
@@ -7769,7 +7828,9 @@
             cx = cx == null ? bbox.x + bbox.width / 2 : cx;
             cy = cy == null ? bbox.y + bbox.height / 2 : cy;
 
-            this.transform(this._.transform.concat([["s", sx, sy, cx, cy]]));
+            this.transform(this._.transform.concat([
+                ["s", sx, sy, cx, cy]
+            ]));
             this._.dirtyT = 1;
             return this;
         };
