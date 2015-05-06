@@ -3,6 +3,10 @@ class SurveillanceController < ApplicationController
   before_filter :github_config
   skip_before_filter :verify_authenticity_token, :only => [:monitor]
 
+  def index
+    @name = @client.user.name
+  end
+
   def monitor
     # eg : https://github.com/fahad-workspace/Surveillance
     link = params[:repo]
@@ -10,14 +14,13 @@ class SurveillanceController < ApplicationController
       @user = link.split('/')[3]
       @repo = link.split('/')[4]
       @repo = @repo.split('.')[0]
-      github_config
       begin
-        @repo_list = Github.repos.list
-          # @commits = Github.repos.commits.list @user, @repo
-          # @commits.each do |commit|
-          #   puts commit.commit.message
-          # end
-      rescue Github::Error::GithubError => e
+        @repo_list = Octokit.repositories(@user)
+        @morris_data = Array.new
+        @repo_list.each do |repo|
+          @morris_data.push(name: repo.name, open_issues_count: repo.open_issues_count)
+        end
+      rescue => e
         flash[:error] = e.message
       end
     else
@@ -30,7 +33,7 @@ class SurveillanceController < ApplicationController
   end
 
   def auth
-    url = Github.new.authorize_url
+    url = @client.authorize_url
     if params[:repo] == 'private'
       url = url + '&scope=repo'
     end
@@ -38,8 +41,8 @@ class SurveillanceController < ApplicationController
   end
 
   def login
-    token = Github.new.get_token(params['code'])
-    session['access_token'] = token.token
+    token = @client.exchange_code_for_token(params['code'])
+    session['access_token'] = token.access_token
     redirect_to request.base_url, notice: 'Signed in!'
   end
 
@@ -50,20 +53,15 @@ class SurveillanceController < ApplicationController
 
   private
   def github_config
-    Github.configure do |c|
-      c.auto_pagination = true
+    Octokit.configure do |c|
+      c.auto_paginate = true
       c.client_id = Rails.application.config.github_client_id
       c.client_secret = Rails.application.config.github_client_secret
       if session['access_token'] != nil
-        c.oauth_token = session['access_token']
-      end
-      if @user != nil
-        c.user = @user
-      end
-      if @repo != nil
-        c.repo = @repo
+        c.access_token = session['access_token']
       end
     end
+    @client = Octokit::Client.new
   end
 
 end

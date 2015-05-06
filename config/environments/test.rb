@@ -40,7 +40,7 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  config.github_client_id = '891a0fcb6bc595a3f426'
-  config.github_client_secret = '4d7046ac6c009df36f8b8f8818494cbe26ea02bf'
+  config.github_client_id = 'ab0f000ed4fb6f13a6c6'
+  config.github_client_secret = '049d5ef30578afac88a79ea056e17ee23d2b5a41'
 
 end

@@ -102,4 +102,4 @@ end
 gem 'mysql2'
 gem 'haml-rails'
 gem 'bootstrap-sass'
-gem 'github_api'
+gem 'octokit'

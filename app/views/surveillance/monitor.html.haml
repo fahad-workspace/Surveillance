@@ -14,7 +14,7 @@
     = @repo_list.count
     %br
     %br
-    = content_tag :div, '', id: 'repo_chart', height: 500, data: {repo: @repo_list}
+    = content_tag :div, '', id: 'repo_chart', data: {repo: @morris_data}
     %br
   - else
     No existing repository!

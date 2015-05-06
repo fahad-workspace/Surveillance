@@ -1,7 +1,7 @@
 .pull-right
   .auth_div
     - if current_user
-      Signed in with GitHub:
+      = "Signed in as #{@name}: "
       = link_to 'Sign out', {controller: '/surveillance', action: 'signout'}
     - else
       Sign in with GitHub:
