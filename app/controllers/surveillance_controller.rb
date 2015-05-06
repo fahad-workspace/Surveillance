@@ -38,9 +38,9 @@ class SurveillanceController < ApplicationController
   end
 
   def login
+    github_config
     token = Github.new.get_token(params['code'])
     session['access_token'] = token.token
-    github_config
     redirect_to request.base_url, notice: 'Signed in!'
   end
 
