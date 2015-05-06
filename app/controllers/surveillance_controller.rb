@@ -1,5 +1,6 @@
 class SurveillanceController < ApplicationController
 
+  before_filter :github_config
   skip_before_filter :verify_authenticity_token, :only => [:monitor]
 
   def monitor
@@ -29,7 +30,6 @@ class SurveillanceController < ApplicationController
   end
 
   def auth
-    github_config
     url = Github.new.authorize_url
     if params[:repo] == 'private'
       url = url + '&scope=repo'
@@ -38,7 +38,6 @@ class SurveillanceController < ApplicationController
   end
 
   def login
-    github_config
     token = Github.new.get_token(params['code'])
     session['access_token'] = token.token
     redirect_to request.base_url, notice: 'Signed in!'
