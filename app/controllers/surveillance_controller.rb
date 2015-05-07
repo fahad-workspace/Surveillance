@@ -4,7 +4,11 @@ class SurveillanceController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:monitor]
 
   def index
-    @name = @client.user.name
+    if session['access_token'] != nil
+      @name = @client.user.name
+    else
+      @name = ''
+    end
   end
 
   def monitor
