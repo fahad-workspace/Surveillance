@@ -1,0 +1,1 @@
+rails generate model Contributor login:string id:integer type:string site_admin:boolean total_contributions:integer recent_contributions:integer repository_id:integer

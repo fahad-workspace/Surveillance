@@ -5,9 +5,9 @@ class SurveillanceController < ApplicationController
 
   def index
     if session['access_token'] != nil
-      @name = @client.user.name
+      @login_name = @client.user.login
     else
-      @name = ''
+      @login_name = ''
     end
   end
 
@@ -24,6 +24,7 @@ class SurveillanceController < ApplicationController
         @repo_list.each do |repo|
           @morris_data.push(name: repo.name, open_issues_count: repo.open_issues_count)
         end
+        binding.pry
       rescue => e
         flash[:error] = e.message
       end
@@ -46,7 +47,7 @@ class SurveillanceController < ApplicationController
 
   def login
     token = @client.exchange_code_for_token(params['code'])
-    session['access_token'] = token.access_token
+    session['access_token'] = token.access_tokenl
     redirect_to request.base_url, notice: 'Signed in!'
   end
 

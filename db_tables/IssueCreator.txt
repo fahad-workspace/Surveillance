@@ -1,0 +1,1 @@
+rails generate model IssueCreator login:string github_issue_creator_id:integer type:string site_admin:boolean

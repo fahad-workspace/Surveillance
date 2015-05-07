@@ -1,0 +1,1 @@
+rails generate model MilestoneCreator login:string github_milestone_creator_id:integer type:string site_admin:boolean

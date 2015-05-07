@@ -1,0 +1,1 @@
+rails generate model User login:string github_user_id:integer type:string public_repos:integer public_gists:integer followers:integer following:integer created_at:datetime updated_at:datetime

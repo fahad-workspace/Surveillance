@@ -1,0 +1,1 @@
+rails generate model Issue github_issue_id:integer number:integer title:string issue_creator_id:integer state:string locked:boolean issue_assignee_id:integer milestone_id:integer comments:integer created_at:datetime updated_at:datetime closed_at:datetime body:string

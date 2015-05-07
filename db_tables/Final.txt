@@ -1,0 +1,28 @@
+Repository:
+
+rails generate model Repository github_repository_id:integer name:string full_name:string private:boolean fork:boolean created_at:datetime updated_at:datetime pushed_at:datetime size:integer language:string has_issues:boolean forks_count:integer open_issues_count:integer default_branch:string subscribers_count:integer repository_owner_id:integer
+
+
+Milestone:
+
+rails generate model Milestone github_milestone_id:integer number:integer title:string open_issues:integer closed_issues:integer state:string created_at:datetime updated_at:datetime due_on:datetime closed_at:datetime milestone_creator_id:integer
+
+
+Issue:
+
+rails generate model Issue github_issue_id:integer number:integer title:string issue_creator_id:integer state:string locked:boolean issue_assignee_id:integer milestone_id:integer comments:integer created_at:datetime updated_at:datetime closed_at:datetime body:string
+
+
+Label:
+
+rails generate model Label name:string color:string repository_id:integer
+
+
+JoinIssueLabel:
+
+rails generate migration CreateJoinTableIssueLabel issue label
+
+
+Contributor:
+
+rails generate model Contributor login:string id:integer type:string site_admin:boolean total_contributions:integer recent_contributions:integer repository_id:integer

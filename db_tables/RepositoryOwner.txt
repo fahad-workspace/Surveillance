@@ -1,0 +1,1 @@
+rails generate model RepositoryOwner login:string github_owner_id:integer type:string

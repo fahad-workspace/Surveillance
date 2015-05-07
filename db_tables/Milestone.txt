@@ -1,0 +1,1 @@
+rails generate model Milestone github_milestone_id:integer number:integer title:string open_issues:integer closed_issues:integer state:string created_at:datetime updated_at:datetime due_on:datetime closed_at:datetime milestone_creator_id:integer

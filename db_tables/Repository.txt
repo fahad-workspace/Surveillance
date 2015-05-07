@@ -1,0 +1,1 @@
+rails generate model Repository github_repository_id:integer name:string full_name:string private:boolean fork:boolean created_at:datetime updated_at:datetime pushed_at:datetime size:integer language:string has_issues:boolean forks_count:integer open_issues_count:integer default_branch:string subscribers_count:integer repository_owner_id:integer

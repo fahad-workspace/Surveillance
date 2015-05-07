@@ -1,0 +1,1 @@
+rails generate model Label name:string color:string repository_id:integer

@@ -1,0 +1,1 @@
+rails generate model IssueAssignee login:string github_issue_assignee_id:integer type:string site_admin:boolean
