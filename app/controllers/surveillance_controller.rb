@@ -18,16 +18,36 @@ class SurveillanceController < ApplicationController
     # eg : https://github.com/fahad-workspace/Surveillance
     link = params[:repo]
     if link =~ /https:\/\/github.com\/(.*)\/(.*)/
-      @user = link.split('/')[3]
-      @repo = link.split('/')[4]
-      @repo = @repo.split('.')[0]
+      @user_login = link.split('/')[3]
+      @repo_name = link.split('/')[4]
+      @repo_name.gsub! '.git', ''
       begin
-        @repo_list = Octokit.repositories(@user)
+        @repo_list = Octokit.repositories(@user_login)
         @morris_data = Array.new
         @repo_list.each do |repo|
           @morris_data.push(name: repo.name, open_issues_count: repo.open_issues_count)
         end
-          # binding.pry
+
+        #######
+
+        repo = Octokit.repository("#{@user_login}/#{@repo_name}")
+        puts repo.id
+        puts repo.name
+        puts repo.full_name
+        puts repo.private
+        puts repo.created_at
+        puts repo.updated_at
+        puts repo.pushed_at
+        puts repo.language
+        puts repo.has_issues
+        puts repo.open_issues_count
+        puts repo.subscribers_count
+        puts repo.owner.id
+
+        Repository.find_by_created_at(:github_repository_id=>repo.id, :name=>repo.name, :full_name=>repo.full_name, :private=>repo.private, :created_at=>repo.created_at, :updated_at=>repo.updated_at, :pushed_at=>repo.pushed_at, :language=>repo.language, :has_issues=>repo.has_issues, :open_issues_count=>repo.open_issues_count, :subscribers_count=>repo.subscribers_count, :repository_owner_id=>repo.owner.id)
+
+        #######
+
       rescue => e
         flash[:error] = e.message
       end
