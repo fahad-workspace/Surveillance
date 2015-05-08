@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150508090955) do
+ActiveRecord::Schema.define(version: 20150508172830) do
 
   create_table "contributors", force: :cascade do |t|
     t.string "login", limit: 255
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20150508090955) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "contributors", ["repository_id"], name: "index_contributors_on_repository_id", using: :btree
+
   create_table "issues", force: :cascade do |t|
     t.integer "github_issue_id", limit: 4
     t.integer "number", limit: 4
@@ -35,7 +37,10 @@ ActiveRecord::Schema.define(version: 20150508090955) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "closed_at"
+    t.integer "repository_id", limit: 4
   end
+
+  add_index "issues", ["repository_id"], name: "index_issues_on_repository_id", using: :btree
 
   create_table "issues_labels", id: false, force: :cascade do |t|
     t.integer "issue_id", limit: 4, null: false
@@ -50,6 +55,8 @@ ActiveRecord::Schema.define(version: 20150508090955) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "labels", ["repository_id"], name: "index_labels_on_repository_id", using: :btree
+
   create_table "milestones", force: :cascade do |t|
     t.integer "github_milestone_id", limit: 4
     t.integer "number", limit: 4
@@ -62,7 +69,10 @@ ActiveRecord::Schema.define(version: 20150508090955) do
     t.datetime "due_on"
     t.datetime "closed_at"
     t.integer "milestone_creator_id", limit: 4
+    t.integer "repository_id", limit: 4
   end
+
+  add_index "milestones", ["repository_id"], name: "index_milestones_on_repository_id", using: :btree
 
   create_table "repositories", force: :cascade do |t|
     t.integer "github_repository_id", limit: 4
@@ -79,4 +89,8 @@ ActiveRecord::Schema.define(version: 20150508090955) do
     t.integer "repository_owner_id", limit: 4
   end
 
+  add_foreign_key "contributors", "repositories"
+  add_foreign_key "issues", "repositories"
+  add_foreign_key "labels", "repositories"
+  add_foreign_key "milestones", "repositories"
 end

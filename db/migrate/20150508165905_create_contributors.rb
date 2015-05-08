@@ -7,6 +7,7 @@ class CreateContributors < ActiveRecord::Migration
       t.integer :total_contributions
       t.integer :recent_contributions
       t.integer :repository_id
+      t.references :repository, index: true, foreign_key: true
 
       t.timestamps null: false
     end

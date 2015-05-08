@@ -5,17 +5,17 @@ rails generate model Repository github_repository_id:integer name:string full_na
 
 Milestone:
 
-rails generate model Milestone github_milestone_id:integer number:integer title:string open_issues:integer closed_issues:integer state:string created_at:datetime updated_at:datetime due_on:datetime closed_at:datetime milestone_creator_id:integer
+rails generate model Milestone github_milestone_id:integer number:integer title:string open_issues:integer closed_issues:integer state:string created_at:datetime updated_at:datetime due_on:datetime closed_at:datetime milestone_creator_id:integer repository:references
 
 
 Issue:
 
-rails generate model Issue github_issue_id:integer number:integer title:string issue_creator_id:integer state:string issue_assignee_id:integer milestone_id:integer created_at:datetime updated_at:datetime closed_at:datetime
+rails generate model Issue github_issue_id:integer number:integer title:string issue_creator_id:integer state:string issue_assignee_id:integer milestone_id:integer created_at:datetime updated_at:datetime closed_at:datetime repository:references
 
 
 Label:
 
-rails generate model Label name:string color:string repository_id:integer
+rails generate model Label name:string color:string repository:references
 
 
 JoinIssueLabel:
@@ -25,4 +25,4 @@ rails generate migration CreateJoinTableIssueLabel issue label
 
 Contributor:
 
-rails generate model Contributor login:string github_contributor_id:integer type:string total_contributions:integer recent_contributions:integer repository_id:integer
+rails generate model Contributor login:string github_contributor_id:integer type:string total_contributions:integer recent_contributions:integer repository_id:integer repository:references

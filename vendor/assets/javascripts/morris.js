@@ -1197,11 +1197,11 @@
                 coord = coords[i];
                 if (coord.y != null) {
                     nextCoord = coords[i + 1] || {
-                            y: null
-                        };
+                        y: null
+                    };
                     prevCoord = coords[i - 1] || {
-                            y: null
-                        };
+                        y: null
+                    };
                     if ((prevCoord.y != null) && (nextCoord.y != null)) {
                         _results.push(grad(prevCoord, nextCoord));
                     } else if (prevCoord.y != null) {

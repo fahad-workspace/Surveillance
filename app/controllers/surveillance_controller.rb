@@ -30,23 +30,20 @@ class SurveillanceController < ApplicationController
 
         #######
 
-        repo = Octokit.repository("#{@user_login}/#{@repo_name}")
-        puts repo.id
-        puts repo.name
-        puts repo.full_name
-        puts repo.private
-        puts repo.created_at
-        puts repo.updated_at
-        puts repo.pushed_at
-        puts repo.language
-        puts repo.has_issues
-        puts repo.open_issues_count
-        puts repo.subscribers_count
-        puts repo.owner.id
+        repository = Octokit.repository("#{@user_login}/#{@repo_name}")
+        repository_db = Repository.find_or_create_by(:github_repository_id => repository.id, :name => repository.name, :full_name => repository.full_name, :private => repository.private, :created_at => repository.created_at, :updated_at => repository.updated_at, :pushed_at => repository.pushed_at, :language => repository.language, :has_issues => repository.has_issues, :open_issues_count => repository.open_issues_count, :subscribers_count => repository.subscribers_count, :repository_owner_id => repository.owner.id)
 
-        Repository.find_by_created_at(:github_repository_id=>repo.id, :name=>repo.name, :full_name=>repo.full_name, :private=>repo.private, :created_at=>repo.created_at, :updated_at=>repo.updated_at, :pushed_at=>repo.pushed_at, :language=>repo.language, :has_issues=>repo.has_issues, :open_issues_count=>repo.open_issues_count, :subscribers_count=>repo.subscribers_count, :repository_owner_id=>repo.owner.id)
+        milestones = Octokit.milestones("#{@user_login}/#{@repo_name}")
+        milestones.each do |milestone|
+          repository_db.milestones.find_or_create_by(:github_milestone_id => milestone.id, :number => milestone.number, :title => milestone.title, :open_issues => milestone.open_issues, :closed_issues => milestone.closed_issues, :state => milestone.state, :created_at => milestone.created_at, :updated_at => milestone.updated_at, :due_on => milestone.due_on, :closed_at => milestone.closed_at, :milestone_creator_id => milestone.creator.id)
+        end
 
-        #######
+        labels = Octokit.labels("#{@user_login}/#{@repo_name}")
+        labels.each do |label|
+          repository_db.labels.find_or_create_by(:name => label.name, :color => label.color)
+        end
+
+          #######
 
       rescue => e
         flash[:error] = e.message

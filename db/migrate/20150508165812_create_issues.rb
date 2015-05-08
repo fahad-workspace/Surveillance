@@ -11,6 +11,7 @@ class CreateIssues < ActiveRecord::Migration
       t.datetime :created_at
       t.datetime :updated_at
       t.datetime :closed_at
+      t.references :repository, index: true, foreign_key: true
 
       t.timestamps null: false
     end

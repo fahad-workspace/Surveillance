@@ -3,7 +3,7 @@ class CreateLabels < ActiveRecord::Migration
     create_table :labels do |t|
       t.string :name
       t.string :color
-      t.integer :repository_id
+      t.references :repository, index: true, foreign_key: true
 
       t.timestamps null: false
     end
