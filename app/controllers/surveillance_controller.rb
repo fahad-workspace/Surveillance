@@ -24,7 +24,7 @@ class SurveillanceController < ApplicationController
         @repo_list.each do |repo|
           @morris_data.push(name: repo.name, open_issues_count: repo.open_issues_count)
         end
-        binding.pry
+        # binding.pry
       rescue => e
         flash[:error] = e.message
       end

@@ -1,0 +1,19 @@
+class CreateMilestones < ActiveRecord::Migration
+  def change
+    create_table :milestones do |t|
+      t.integer :github_milestone_id
+      t.integer :number
+      t.string :title
+      t.integer :open_issues
+      t.integer :closed_issues
+      t.string :state
+      t.datetime :created_at
+      t.datetime :updated_at
+      t.datetime :due_on
+      t.datetime :closed_at
+      t.integer :milestone_creator_id
+
+      t.timestamps null: false
+    end
+  end
+end
