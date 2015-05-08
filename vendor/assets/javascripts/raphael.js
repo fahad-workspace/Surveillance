@@ -1140,9 +1140,9 @@
         V = mmax(r, g, b);
         C = V - mmin(r, g, b);
         H = (C == 0 ? null :
-            V == r ? (g - b) / C :
-                V == g ? (b - r) / C + 2 :
-                (r - g) / C + 4
+                V == r ? (g - b) / C :
+                    V == g ? (b - r) / C + 2 :
+                    (r - g) / C + 4
         );
         H = ((H + 360) % 6) * 60 / 360;
         S = C == 0 ? 0 : C / V;
@@ -4563,10 +4563,10 @@
                                 break;
                             case "colour":
                                 now = "rgb(" + [
-                                    upto255(round(from[attr].r + pos * ms * diff[attr].r)),
-                                    upto255(round(from[attr].g + pos * ms * diff[attr].g)),
-                                    upto255(round(from[attr].b + pos * ms * diff[attr].b))
-                                ].join(",") + ")";
+                                        upto255(round(from[attr].r + pos * ms * diff[attr].r)),
+                                        upto255(round(from[attr].g + pos * ms * diff[attr].g)),
+                                        upto255(round(from[attr].b + pos * ms * diff[attr].b))
+                                    ].join(",") + ")";
                                 break;
                             case "path":
                                 now = [];

@@ -14,26 +14,26 @@
 ActiveRecord::Schema.define(version: 20150508090955) do
 
   create_table "contributors", force: :cascade do |t|
-    t.string   "login",                 limit: 255
-    t.integer  "github_contributor_id", limit: 4
-    t.string   "type",                  limit: 255
-    t.integer  "total_contributions",   limit: 4
-    t.integer  "recent_contributions",  limit: 4
-    t.integer  "repository_id",         limit: 4
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.string "login", limit: 255
+    t.integer "github_contributor_id", limit: 4
+    t.string "type", limit: 255
+    t.integer "total_contributions", limit: 4
+    t.integer "recent_contributions", limit: 4
+    t.integer "repository_id", limit: 4
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "issues", force: :cascade do |t|
-    t.integer  "github_issue_id",   limit: 4
-    t.integer  "number",            limit: 4
-    t.string   "title",             limit: 255
-    t.integer  "issue_creator_id",  limit: 4
-    t.string   "state",             limit: 255
-    t.integer  "issue_assignee_id", limit: 4
-    t.integer  "milestone_id",      limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.integer "github_issue_id", limit: 4
+    t.integer "number", limit: 4
+    t.string "title", limit: 255
+    t.integer "issue_creator_id", limit: 4
+    t.string "state", limit: 255
+    t.integer "issue_assignee_id", limit: 4
+    t.integer "milestone_id", limit: 4
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "closed_at"
   end
 
@@ -43,40 +43,40 @@ ActiveRecord::Schema.define(version: 20150508090955) do
   end
 
   create_table "labels", force: :cascade do |t|
-    t.string   "name",          limit: 255
-    t.string   "color",         limit: 255
-    t.integer  "repository_id", limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string "name", limit: 255
+    t.string "color", limit: 255
+    t.integer "repository_id", limit: 4
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "milestones", force: :cascade do |t|
-    t.integer  "github_milestone_id",  limit: 4
-    t.integer  "number",               limit: 4
-    t.string   "title",                limit: 255
-    t.integer  "open_issues",          limit: 4
-    t.integer  "closed_issues",        limit: 4
-    t.string   "state",                limit: 255
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.integer "github_milestone_id", limit: 4
+    t.integer "number", limit: 4
+    t.string "title", limit: 255
+    t.integer "open_issues", limit: 4
+    t.integer "closed_issues", limit: 4
+    t.string "state", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "due_on"
     t.datetime "closed_at"
-    t.integer  "milestone_creator_id", limit: 4
+    t.integer "milestone_creator_id", limit: 4
   end
 
   create_table "repositories", force: :cascade do |t|
-    t.integer  "github_repository_id", limit: 4
-    t.string   "name",                 limit: 255
-    t.string   "full_name",            limit: 255
-    t.boolean  "private",              limit: 1
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.integer "github_repository_id", limit: 4
+    t.string "name", limit: 255
+    t.string "full_name", limit: 255
+    t.boolean "private", limit: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "pushed_at"
-    t.string   "language",             limit: 255
-    t.boolean  "has_issues",           limit: 1
-    t.integer  "open_issues_count",    limit: 4
-    t.integer  "subscribers_count",    limit: 4
-    t.integer  "repository_owner_id",  limit: 4
+    t.string "language", limit: 255
+    t.boolean "has_issues", limit: 1
+    t.integer "open_issues_count", limit: 4
+    t.integer "subscribers_count", limit: 4
+    t.integer "repository_owner_id", limit: 4
   end
 
 end
