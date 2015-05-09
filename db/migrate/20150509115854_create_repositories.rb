@@ -12,7 +12,7 @@ class CreateRepositories < ActiveRecord::Migration
       t.boolean :has_issues
       t.integer :open_issues_count
       t.integer :subscribers_count
-      t.integer :repository_owner_id
+      t.references :user, index: true, foreign_key: true
 
       t.timestamps null: false
     end

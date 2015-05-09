@@ -1,3 +1,5 @@
+require 'date'
+
 class SurveillanceController < ApplicationController
 
   before_filter :github_config
@@ -31,16 +33,35 @@ class SurveillanceController < ApplicationController
         #######
 
         repository = Octokit.repository("#{@user_login}/#{@repo_name}")
-        repository_db = Repository.find_or_create_by(:github_repository_id => repository.id, :name => repository.name, :full_name => repository.full_name, :private => repository.private, :created_at => repository.created_at, :updated_at => repository.updated_at, :pushed_at => repository.pushed_at, :language => repository.language, :has_issues => repository.has_issues, :open_issues_count => repository.open_issues_count, :subscribers_count => repository.subscribers_count, :repository_owner_id => repository.owner.id)
+        user = Octokit.user(repository.owner.id)
+        user_db = User.find_or_create_by(:github_user_id => user.id, :github_user_login => user.login, :github_user_type => user.type)
+        repository_db = Repository.find_or_create_by(:github_repository_id => repository.id, :name => repository.name, :full_name => repository.full_name, :private => repository.private, :created_at => repository.created_at, :updated_at => repository.updated_at, :pushed_at => repository.pushed_at, :language => repository.language, :has_issues => repository.has_issues, :open_issues_count => repository.open_issues_count, :subscribers_count => repository.subscribers_count, :user_id => user_db.id)
 
         milestones = Octokit.milestones("#{@user_login}/#{@repo_name}")
         milestones.each do |milestone|
-          repository_db.milestones.find_or_create_by(:github_milestone_id => milestone.id, :number => milestone.number, :title => milestone.title, :open_issues => milestone.open_issues, :closed_issues => milestone.closed_issues, :state => milestone.state, :created_at => milestone.created_at, :updated_at => milestone.updated_at, :due_on => milestone.due_on, :closed_at => milestone.closed_at, :milestone_creator_id => milestone.creator.id)
+          user = Octokit.user(milestone.creator.id)
+          user_db = User.find_or_create_by(:github_user_id => user.id, :github_user_login => user.login, :github_user_type => user.type)
+          repository_db.milestones.find_or_create_by(:github_milestone_id => milestone.id, :number => milestone.number, :title => milestone.title, :open_issues => milestone.open_issues, :closed_issues => milestone.closed_issues, :state => milestone.state, :created_at => milestone.created_at, :updated_at => milestone.updated_at, :due_on => milestone.due_on, :closed_at => milestone.closed_at, :user_id => user_db.id)
         end
 
         labels = Octokit.labels("#{@user_login}/#{@repo_name}")
         labels.each do |label|
           repository_db.labels.find_or_create_by(:name => label.name, :color => label.color)
+        end
+
+        contributors = Octokit.contributors("#{@user_login}/#{@repo_name}")
+        commits = Octokit.commits_since("#{@user_login}/#{@repo_name}", (Date.today - 15).to_s)
+
+        contributors.each do |contributor|
+          individual_commit_count = 0
+          commits.each do |commit|
+            if contributor.id == commit.author.id
+              individual_commit_count = individual_commit_count + 1
+            end
+          end
+          user = Octokit.user(contributor.id)
+          user_db = User.find_or_create_by(:github_user_id => user.id, :github_user_login => user.login, :github_user_type => user.type)
+          repository_db.contributors.find_or_create_by(:total_contributions => contributor.contributions, :recent_contributions => individual_commit_count, :user_id => user_db.id)
         end
 
           #######
