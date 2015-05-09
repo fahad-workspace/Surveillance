@@ -23,6 +23,7 @@ class SurveillanceController < ApplicationController
       @user_login = link.split('/')[3]
       @repo_name = link.split('/')[4]
       @repo_name.gsub! '.git', ''
+      @full_repo_name = @user_login + '/' + @repo_name
       begin
         @repo_list = Octokit.repositories(@user_login)
         @morris_data = Array.new
@@ -32,42 +33,56 @@ class SurveillanceController < ApplicationController
 
         #######
 
-        repository = Octokit.repository("#{@user_login}/#{@repo_name}")
-        user = Octokit.user(repository.owner.id)
-        user_db = User.find_or_create_by(:github_user_id => user.id, :github_user_login => user.login, :github_user_type => user.type)
-        repository_db = Repository.find_or_create_by(:github_repository_id => repository.id, :name => repository.name, :full_name => repository.full_name, :private => repository.private, :created_at => repository.created_at, :updated_at => repository.updated_at, :pushed_at => repository.pushed_at, :language => repository.language, :has_issues => repository.has_issues, :open_issues_count => repository.open_issues_count, :subscribers_count => repository.subscribers_count, :user_id => user_db.id)
-
-        milestones = Octokit.milestones("#{@user_login}/#{@repo_name}")
-        milestones.each do |milestone|
-          user = Octokit.user(milestone.creator.id)
-          user_db = User.find_or_create_by(:github_user_id => user.id, :github_user_login => user.login, :github_user_type => user.type)
-          repository_db.milestones.find_or_create_by(:github_milestone_id => milestone.id, :number => milestone.number, :title => milestone.title, :open_issues => milestone.open_issues, :closed_issues => milestone.closed_issues, :state => milestone.state, :created_at => milestone.created_at, :updated_at => milestone.updated_at, :due_on => milestone.due_on, :closed_at => milestone.closed_at, :user_id => user_db.id)
+        repo = Octokit.repository(@full_repo_name)
+        @user = User.find_or_create_by(:github_user_id => repo.owner.id, :github_user_login => repo.owner.login, :github_user_type => repo.owner.type)
+        @repository = Repository.find_or_create_by(:github_repository_id => repo.id, :name => repo.name, :full_name => repo.full_name, :private => repo.private, :created_at => repo.created_at, :updated_at => repo.updated_at, :pushed_at => repo.pushed_at, :language => repo.language, :has_issues => repo.has_issues, :open_issues_count => repo.open_issues_count, :subscribers_count => repo.subscribers_count, :user_id => @user)
+        miles = Octokit.milestones(@full_repo_name)
+        miles.each do |mile|
+          @user = User.find_or_create_by(:github_user_id => mile.creator.id, :github_user_login => mile.creator.login, :github_user_type => mile.creator.type)
+          @repository.milestones.find_or_create_by(:github_milestone_id => mile.id, :number => mile.number, :title => mile.title, :open_issues => mile.open_issues, :closed_issues => mile.closed_issues, :state => mile.state, :created_at => mile.created_at, :updated_at => mile.updated_at, :due_on => mile.due_on, :closed_at => mile.closed_at, :user_id => @user)
         end
-
-        labels = Octokit.labels("#{@user_login}/#{@repo_name}")
-        labels.each do |label|
-          repository_db.labels.find_or_create_by(:name => label.name, :color => label.color)
+        lbls = Octokit.labels(@full_repo_name)
+        lbls.each do |lbl|
+          @repository.labels.find_or_create_by(:name => lbl.name, :color => lbl.color)
         end
-
-        contributors = Octokit.contributors("#{@user_login}/#{@repo_name}")
-        commits = Octokit.commits_since("#{@user_login}/#{@repo_name}", (Date.today - 15).to_s)
-
-        contributors.each do |contributor|
+        contribs = Octokit.contributors(@full_repo_name)
+        cmts = Octokit.commits_since(@full_repo_name, (Date.today - 15).to_s)
+        contribs.each do |contrib|
           individual_commit_count = 0
-          commits.each do |commit|
-            if contributor.id == commit.author.id
+          cmts.each do |cmt|
+            if contrib.id == cmt.author.id
               individual_commit_count = individual_commit_count + 1
             end
           end
-          user = Octokit.user(contributor.id)
-          user_db = User.find_or_create_by(:github_user_id => user.id, :github_user_login => user.login, :github_user_type => user.type)
-          repository_db.contributors.find_or_create_by(:total_contributions => contributor.contributions, :recent_contributions => individual_commit_count, :user_id => user_db.id)
+          @user = User.find_or_create_by(:github_user_id => contrib.id, :github_user_login => contrib.login, :github_user_type => contrib.type)
+          @repository.contributors.find_or_create_by(:total_contributions => contrib.contributions, :recent_contributions => individual_commit_count, :user_id => @user)
+        end
+        if repo.has_issues == true
+          isus = Octokit.issues(@full_repo_name)
+          isus.each do |isu|
+            assignee_id = nil
+            milestone_id = nil
+            @user = User.find_or_create_by(:github_user_id => isu.user.id, :github_user_login => isu.user.login, :github_user_type => isu.user.type)
+            if !(isu.assignee.nil?)
+              @assignee = User.find_or_create_by(:github_user_id => isu.assignee.id, :github_user_login => isu.assignee.login, :github_user_type => isu.assignee.type)
+              assignee_id = @assignee.id
+            end
+            if !(isu.milestone.nil?)
+              @milestone = @repository.milestones.find_by(:github_milestone_id=>isu.milestone.id)
+              milestone_id = @milestone.id
+            end
+            @issue = @repository.issues.find_or_create_by(:github_issue_id=>isu.id, :number=>isu.number, :title=>isu.title, :state=>isu.state, :issue_assignee_id=>assignee_id, :milestone_id=>milestone_id, :created_at=>isu.created_at, :updated_at=>isu.updated_at, :closed_at=>isu.closed_at, :user_id=>@user.id)
+            isu.labels.each do |lbl|
+              @label = @repository.labels.find_by(:name => lbl.name, :color => lbl.color)
+              IssueLabel.find_or_create_by(:issue_id=>@issue.id, :label_id=>@label.id, :repository_id=>@repository.id)
+            end
+          end
         end
 
-          #######
+        #######
 
-      rescue => e
-        flash[:error] = e.message
+      #rescue => e
+      #  flash[:error] = e.message
       end
     else
       if link.length == 0
