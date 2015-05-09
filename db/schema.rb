@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150508172830) do
+ActiveRecord::Schema.define(version: 20150509084631) do
 
   create_table "contributors", force: :cascade do |t|
     t.string "login", limit: 255
@@ -25,6 +25,18 @@ ActiveRecord::Schema.define(version: 20150508172830) do
   end
 
   add_index "contributors", ["repository_id"], name: "index_contributors_on_repository_id", using: :btree
+
+  create_table "issue_labels", force: :cascade do |t|
+    t.integer "issue_id", limit: 4
+    t.integer "label_id", limit: 4
+    t.integer "repository_id", limit: 4
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "issue_labels", ["issue_id"], name: "index_issue_labels_on_issue_id", using: :btree
+  add_index "issue_labels", ["label_id"], name: "index_issue_labels_on_label_id", using: :btree
+  add_index "issue_labels", ["repository_id"], name: "index_issue_labels_on_repository_id", using: :btree
 
   create_table "issues", force: :cascade do |t|
     t.integer "github_issue_id", limit: 4
@@ -41,11 +53,6 @@ ActiveRecord::Schema.define(version: 20150508172830) do
   end
 
   add_index "issues", ["repository_id"], name: "index_issues_on_repository_id", using: :btree
-
-  create_table "issues_labels", id: false, force: :cascade do |t|
-    t.integer "issue_id", limit: 4, null: false
-    t.integer "label_id", limit: 4, null: false
-  end
 
   create_table "labels", force: :cascade do |t|
     t.string "name", limit: 255
@@ -90,6 +97,9 @@ ActiveRecord::Schema.define(version: 20150508172830) do
   end
 
   add_foreign_key "contributors", "repositories"
+  add_foreign_key "issue_labels", "issues"
+  add_foreign_key "issue_labels", "labels"
+  add_foreign_key "issue_labels", "repositories"
   add_foreign_key "issues", "repositories"
   add_foreign_key "labels", "repositories"
   add_foreign_key "milestones", "repositories"
