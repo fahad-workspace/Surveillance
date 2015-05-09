@@ -30,9 +30,6 @@ class SurveillanceController < ApplicationController
         @repo_list.each do |repo|
           @morris_data.push(name: repo.name, open_issues_count: repo.open_issues_count)
         end
-
-        #######
-
         repo = Octokit.repository(@full_repo_name)
         @user = User.find_or_create_by(:github_user_id => repo.owner.id, :github_user_login => repo.owner.login, :github_user_type => repo.owner.type)
         @repository = Repository.find_or_create_by(:github_repository_id => repo.id, :name => repo.name, :full_name => repo.full_name, :private => repo.private, :created_at => repo.created_at, :updated_at => repo.updated_at, :pushed_at => repo.pushed_at, :language => repo.language, :has_issues => repo.has_issues, :open_issues_count => repo.open_issues_count, :subscribers_count => repo.subscribers_count, :user_id => @user)
@@ -68,21 +65,18 @@ class SurveillanceController < ApplicationController
               assignee_id = @assignee.id
             end
             if !(isu.milestone.nil?)
-              @milestone = @repository.milestones.find_by(:github_milestone_id=>isu.milestone.id)
+              @milestone = @repository.milestones.find_by(:github_milestone_id => isu.milestone.id)
               milestone_id = @milestone.id
             end
-            @issue = @repository.issues.find_or_create_by(:github_issue_id=>isu.id, :number=>isu.number, :title=>isu.title, :state=>isu.state, :issue_assignee_id=>assignee_id, :milestone_id=>milestone_id, :created_at=>isu.created_at, :updated_at=>isu.updated_at, :closed_at=>isu.closed_at, :user_id=>@user.id)
+            @issue = @repository.issues.find_or_create_by(:github_issue_id => isu.id, :number => isu.number, :title => isu.title, :state => isu.state, :issue_assignee_id => assignee_id, :milestone_id => milestone_id, :created_at => isu.created_at, :updated_at => isu.updated_at, :closed_at => isu.closed_at, :user_id => @user.id)
             isu.labels.each do |lbl|
               @label = @repository.labels.find_by(:name => lbl.name, :color => lbl.color)
-              IssueLabel.find_or_create_by(:issue_id=>@issue.id, :label_id=>@label.id, :repository_id=>@repository.id)
+              IssueLabel.find_or_create_by(:issue_id => @issue.id, :label_id => @label.id, :repository_id => @repository.id)
             end
           end
         end
-
-        #######
-
-      #rescue => e
-      #  flash[:error] = e.message
+      rescue => e
+        flash[:error] = e.message
       end
     else
       if link.length == 0
