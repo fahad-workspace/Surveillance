@@ -67,21 +67,22 @@ group :development do
   # gem 'capistrano-rails', group: :development
 
   gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'annotate'
-  gem 'bullet'
-  gem 'flay'
-  gem 'hirb'
-  gem 'mailcatcher'
-  gem 'meta_request'
   gem 'pry'
-  gem 'quiet_assets'
-  gem 'railroady'
-  gem 'rails-footnotes'
-  gem 'rails_best_practices'
-  gem 'reek'
-  gem 'request-log-analyzer'
-  gem 'smusher'
+
+  # gem 'binding_of_caller'
+  # gem 'annotate'
+  # gem 'bullet'
+  # gem 'flay'
+  # gem 'hirb'
+  # gem 'mailcatcher'
+  # gem 'meta_request'
+  # gem 'quiet_assets'
+  # gem 'railroady'
+  # gem 'rails-footnotes'
+  # gem 'rails_best_practices'
+  # gem 'reek'
+  # gem 'request-log-analyzer'
+  # gem 'smusher'
 
 end
 
