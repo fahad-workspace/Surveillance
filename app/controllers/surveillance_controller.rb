@@ -26,9 +26,11 @@ class SurveillanceController < ApplicationController
       @full_repo_name = @user_login + '/' + @repo_name
       begin
         @repo_list = Octokit.repositories(@user_login)
-        @morris_data = Array.new
+        @highchart_x_data = Array.new
+        @highchart_y_data = Array.new
         @repo_list.each do |repo|
-          @morris_data.push(name: repo.name, open_issues_count: repo.open_issues_count)
+          @highchart_x_data.push(repo.name)
+          @highchart_y_data.push(repo.open_issues_count)
         end
         repo = Octokit.repository(@full_repo_name)
         @user = User.find_or_create_by(:github_user_id => repo.owner.id, :github_user_login => repo.owner.login, :github_user_type => repo.owner.type)

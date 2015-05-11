@@ -13,15 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require morris
-//= require raphael
-//= require_tree .
-
-/*!
- * Bootstrap v3.3.4 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
-
-//= require jquery
+//= require highcharts
 //= require bootstrap-sprockets
+//= require_tree .
