@@ -75,8 +75,8 @@ class SurveillanceController < ApplicationController
             end
           end
         end
-      # rescue => e
-      #   flash[:error] = e.message
+      rescue => e
+        flash[:error] = e.message
       end
     else
       if link.length == 0
