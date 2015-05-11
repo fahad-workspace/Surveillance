@@ -32,11 +32,11 @@ class SurveillanceController < ApplicationController
         end
         repo = Octokit.repository(@full_repo_name)
         @user = User.find_or_create_by(:github_user_id => repo.owner.id, :github_user_login => repo.owner.login, :github_user_type => repo.owner.type)
-        @repository = Repository.find_or_create_by(:github_repository_id => repo.id, :name => repo.name, :full_name => repo.full_name, :private => repo.private, :created_at => repo.created_at, :updated_at => repo.updated_at, :pushed_at => repo.pushed_at, :language => repo.language, :has_issues => repo.has_issues, :open_issues_count => repo.open_issues_count, :subscribers_count => repo.subscribers_count, :user_id => @user)
+        @repository = Repository.find_or_create_by(:github_repository_id => repo.id, :name => repo.name, :full_name => repo.full_name, :private => repo.private, :created_at => repo.created_at, :updated_at => repo.updated_at, :pushed_at => repo.pushed_at, :language => repo.language, :has_issues => repo.has_issues, :open_issues_count => repo.open_issues_count, :subscribers_count => repo.subscribers_count, :user_id => @user.id)
         miles = Octokit.milestones(@full_repo_name)
         miles.each do |mile|
           @user = User.find_or_create_by(:github_user_id => mile.creator.id, :github_user_login => mile.creator.login, :github_user_type => mile.creator.type)
-          @repository.milestones.find_or_create_by(:github_milestone_id => mile.id, :number => mile.number, :title => mile.title, :open_issues => mile.open_issues, :closed_issues => mile.closed_issues, :state => mile.state, :created_at => mile.created_at, :updated_at => mile.updated_at, :due_on => mile.due_on, :closed_at => mile.closed_at, :user_id => @user)
+          @repository.milestones.find_or_create_by(:github_milestone_id => mile.id, :number => mile.number, :title => mile.title, :open_issues => mile.open_issues, :closed_issues => mile.closed_issues, :state => mile.state, :created_at => mile.created_at, :updated_at => mile.updated_at, :due_on => mile.due_on, :closed_at => mile.closed_at, :user_id => @user.id)
         end
         lbls = Octokit.labels(@full_repo_name)
         lbls.each do |lbl|
@@ -52,7 +52,7 @@ class SurveillanceController < ApplicationController
             end
           end
           @user = User.find_or_create_by(:github_user_id => contrib.id, :github_user_login => contrib.login, :github_user_type => contrib.type)
-          @repository.contributors.find_or_create_by(:total_contributions => contrib.contributions, :recent_contributions => individual_commit_count, :user_id => @user)
+          @repository.contributors.find_or_create_by(:total_contributions => contrib.contributions, :recent_contributions => individual_commit_count, :user_id => @user.id)
         end
         if repo.has_issues == true
           isus = Octokit.issues(@full_repo_name)
@@ -75,8 +75,8 @@ class SurveillanceController < ApplicationController
             end
           end
         end
-      rescue => e
-        flash[:error] = e.message
+      # rescue => e
+      #   flash[:error] = e.message
       end
     else
       if link.length == 0
