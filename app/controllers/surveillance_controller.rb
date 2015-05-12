@@ -26,11 +26,11 @@ class SurveillanceController < ApplicationController
       @full_repo_name = @user_login + '/' + @repo_name
       begin
         @repo_list = Octokit.repositories(@user_login)
-        @highchartxdata = Array.new
-        @highchartydata = Array.new
+        @issuexdata = Array.new
+        @issueydata = Array.new
         @repo_list.each do |repo|
-          @highchartxdata.push(repo.name)
-          @highchartydata.push(repo.open_issues_count)
+          @issuexdata.push(repo.name)
+          @issueydata.push(repo.open_issues_count)
         end
         repo = Octokit.repository(@full_repo_name)
         @user = User.find_or_create_by(:github_user_id => repo.owner.id, :github_user_login => repo.owner.login, :github_user_type => repo.owner.type)
@@ -46,12 +46,20 @@ class SurveillanceController < ApplicationController
         end
         contribs = Octokit.contributors(@full_repo_name)
         cmts = Octokit.commits_since(@full_repo_name, (Date.today - 15).to_s)
+        @contribydata = Array.new
+        @contribtotalxdata = Array.new
+        @contribrecentxdata = Array.new
         contribs.each do |contrib|
           individual_commit_count = 0
           cmts.each do |cmt|
             if contrib.id == cmt.author.id
               individual_commit_count = individual_commit_count + 1
             end
+          end
+          if contrib.contributions > 2
+            @contribydata.push(contrib.login)
+            @contribtotalxdata.push(contrib.contributions)
+            @contribrecentxdata.push(individual_commit_count)
           end
           @user = User.find_or_create_by(:github_user_id => contrib.id, :github_user_login => contrib.login, :github_user_type => contrib.type)
           @repository.contributors.find_or_create_by(:total_contributions => contrib.contributions, :recent_contributions => individual_commit_count, :user_id => @user.id)

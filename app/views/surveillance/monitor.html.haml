@@ -14,7 +14,10 @@
     = @repo_list.count
     %br
     %br
-    = content_tag :div, '', id: 'repo_chart', data: {highchartxdata: @highchartxdata, highchartydata: @highchartydata}
+    = content_tag :div, '', id: 'issue_chart', data: {issuexdata: @issuexdata, issueydata: @issueydata}
+    %br
+    %br
+    = content_tag :div, '', id: 'contrib_chart', data: {contribydata: @contribydata, contribtotalxdata: @contribtotalxdata, contribrecentxdata: @contribrecentxdata}, style: "height: #{(@contribydata.count * 30)}px"
     %br
   - else
     No existing repository!
