@@ -5,7 +5,7 @@
 jQuery ->
   $('#repo_chart').highcharts
     title:
-      text: 'Total Commits'
+      text: 'Total Issues'
       x: -20
     subtitle:
       text: '(In Each Repository)'
@@ -14,7 +14,7 @@ jQuery ->
       categories: $('#repo_chart').data('highchartxdata')
     yAxis:
       title:
-        text: 'Commits (In Each Repository)'
+        text: 'Issues (In Each Repository)'
       min: 0
     legend:
       layout: 'vertical'
@@ -22,7 +22,7 @@ jQuery ->
       verticalAlign: 'middle'
       borderWidth: 0
     series: [{
-      name: 'Commits'
+      name: 'Issues'
       data: $('#repo_chart').data('highchartydata')
     }]
     chart:
