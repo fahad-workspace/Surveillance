@@ -1,14 +1,33 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-#  Morris.Line
-#    element: 'repo_chart'
-#    data: $('#repo_chart').data('repo')
-#    xkey: 'name'
-#    ykeys: ['open_issues_count']
-#    labels: ['Issue Count']
-#    parseTime: false
-#    gridTextSize: 10
-#    xLabelAngle: 90
 
 jQuery ->
+  $('#repo_chart').highcharts
+    title:
+      text: 'Total Commits'
+      x: -20
+    subtitle:
+      text: '(In Each Repository)'
+      x: -20
+    xAxis:
+      categories: $('#repo_chart').data('highchartxdata')
+    yAxis:
+      title:
+        text: 'Commits (In Each Repository)'
+      min: 0
+    legend:
+      layout: 'vertical'
+      align: 'right'
+      verticalAlign: 'middle'
+      borderWidth: 0
+    series: [{
+      name: 'Commits'
+      data: $('#repo_chart').data('highchartydata')
+    }]
+    chart:
+      backgroundColor: 'rgba(0,0,0,0)'
+      plotBorderWidth: 1
+      plotBorderColor: '#666'
+      borderWidth: 3
+      borderColor: '#666'
