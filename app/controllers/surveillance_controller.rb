@@ -29,8 +29,10 @@ class SurveillanceController < ApplicationController
         @issuexdata = Array.new
         @issueydata = Array.new
         @repo_list.each do |repo|
-          @issuexdata.push(repo.name)
-          @issueydata.push(repo.open_issues_count)
+          if (repo.open_issues_count > 0)
+            @issuexdata.push(repo.name)
+            @issueydata.push(repo.open_issues_count)
+          end
         end
         repo = Octokit.repository(@full_repo_name)
         @user = User.find_or_create_by(:github_user_id => repo.owner.id, :github_user_login => repo.owner.login, :github_user_type => repo.owner.type)
@@ -56,7 +58,7 @@ class SurveillanceController < ApplicationController
               individual_commit_count = individual_commit_count + 1
             end
           end
-          if contrib.contributions > 2
+          if (contrib.contributions > 2 && individual_commit_count > 0)
             @contribydata.push(contrib.login)
             @contribtotalxdata.push(contrib.contributions)
             @contribrecentxdata.push(individual_commit_count)
