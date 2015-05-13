@@ -12,12 +12,18 @@
   - if @repo_list.length > 0
     %b Repo Count:
     = @repo_list.count
-    %br
-    %br
-    = content_tag :div, '', id: 'issue_chart', data: {issuexdata: @issuexdata, issueydata: @issueydata}, style: "height: #{((@issuexdata.count * 50) + 100)}px"
-    %br
-    %br
-    = content_tag :div, '', id: 'contrib_chart', data: {contribydata: @contribydata, contribtotalxdata: @contribtotalxdata, contribrecentxdata: @contribrecentxdata}, style: "height: #{((@contribydata.count * 100) + 100)}px"
+    - if @issuexdata.count > 0
+      %br
+      %br
+      = content_tag :div, '', id: 'issue_chart', data: {issuexdata: @issuexdata, issueydata: @issueydata}, style: "height: #{((@issuexdata.count * 50) + 100)}px"
+    - if @contribydata.count > 0
+      %br
+      %br
+      = content_tag :div, '', id: 'contrib_chart', data: {contribydata: @contribydata, contribtotalxdata: @contribtotalxdata, contribrecentxdata: @contribrecentxdata}, style: "height: #{((@contribydata.count * 100) + 100)}px"
+    - if @labeldata.count > 0
+      %br
+      %br
+      = content_tag :div, '', id: 'label_chart', data: {labeldata: @labeldata}
     %br
   - else
     No existing repository!

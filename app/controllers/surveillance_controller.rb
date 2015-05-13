@@ -43,6 +43,7 @@ class SurveillanceController < ApplicationController
           @repository.milestones.find_or_create_by(:github_milestone_id => mile.id, :number => mile.number, :title => mile.title, :open_issues => mile.open_issues, :closed_issues => mile.closed_issues, :state => mile.state, :created_at => mile.created_at, :updated_at => mile.updated_at, :due_on => mile.due_on, :closed_at => mile.closed_at, :user_id => @user.id)
         end
         lbls = Octokit.labels(@full_repo_name)
+        @labeldata = Array.new
         lbls.each do |lbl|
           @repository.labels.find_or_create_by(:name => lbl.name, :color => lbl.color)
         end
@@ -85,6 +86,14 @@ class SurveillanceController < ApplicationController
               @label = @repository.labels.find_by(:name => lbl.name, :color => lbl.color)
               IssueLabel.find_or_create_by(:issue_id => @issue.id, :label_id => @label.id, :repository_id => @repository.id)
             end
+          end
+        end
+        @labeldata = Array.new
+        @labels = Label.where(:repository_id => @repository.id)
+        @issuelabel = IssueLabel.where(:repository_id => @repository.id)
+        @labels.each do |label|
+          if ((IssueLabel.where(:repository_id => @repository.id, :label_id => label.id)).count > 0)
+            @labeldata.push([label.name, (IssueLabel.where(:repository_id => @repository.id, :label_id => label.id)).count])
           end
         end
       rescue => e

@@ -141,3 +141,50 @@ jQuery ->
     exportChart:
       type: 'application/pdf'
       filename: 'Total Issues'
+
+  Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, (color) ->
+    {
+      radialGradient:
+        cx: 0.5
+        cy: 0.3
+        r: 0.7
+      stops: [
+        [
+          0
+          color
+        ]
+        [
+          1
+          Highcharts.Color(color).brighten(-0.3).get('rgb')
+        ]
+      ]
+    }
+  )
+
+  $('#label_chart').highcharts
+    chart:
+      plotBackgroundColor: null
+      plotBorderWidth: null
+      plotShadow: false
+      backgroundColor: 'rgba(0,0,0,0)'
+      plotBorderWidth: 1
+      plotBorderColor: '#666'
+      borderWidth: 3
+      borderColor: '#666'
+    title: text: 'Label Association'
+    credits: enabled: false
+    plotOptions: pie:
+      allowPointSelect: true
+      cursor: 'pointer'
+      dataLabels:
+        enabled: true
+        style: color: Highcharts.theme and Highcharts.theme.contrastTextColor or 'black'
+        connectorColor: 'silver'
+    series: [ {
+      type: 'pie'
+      name: 'Label Association'
+      data: $('#label_chart').data('labeldata')
+    } ]
+    exportChart:
+      type: 'application/pdf'
+      filename: 'Total Issues'
