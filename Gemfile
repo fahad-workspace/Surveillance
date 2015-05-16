@@ -96,10 +96,11 @@ end
 group :production do
 
   gem 'rails_12factor'
+  gem 'puma'
 
 end
 
-gem 'puma'
+gem 'thin'
 gem 'pg'
 gem 'mysql2'
 gem 'haml-rails'
