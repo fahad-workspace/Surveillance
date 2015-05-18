@@ -1,5 +1,3 @@
-require 'date'
-
 class SurveillanceController < ApplicationController
 
   before_filter :github_config
