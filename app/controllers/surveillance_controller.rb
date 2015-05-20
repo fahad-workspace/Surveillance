@@ -95,7 +95,7 @@ class SurveillanceController < ApplicationController
           end
         end
 
-        puts @client.subscribe("https://github.com/#{@full_repo_name}/events/push.json", "surveillance-site.herokuapp.com/github_webhooks")
+        puts @client.subscribe("https://github.com/#{@full_repo_name}/events/push.json", "http://surveillance-site.herokuapp.com/github_webhooks")
 
       rescue => e
         flash[:error] = e.message
