@@ -1,7 +1,7 @@
 class SurveillanceController < ApplicationController
 
   before_filter :github_config
-  skip_before_filter :verify_authenticity_token, :only => [:monitor]
+  skip_before_filter :verify_authenticity_token, :only => [:monitor, :hooks]
 
   def index
     if session['access_token'] != nil
