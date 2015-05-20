@@ -94,6 +94,9 @@ class SurveillanceController < ApplicationController
             @labeldata.push([label.name, (IssueLabel.where(:repository_id => @repository.id, :label_id => label.id)).count])
           end
         end
+
+        puts @client.subscribe("https://github.com/#{@full_repo_name}/events/push.json", "surveillance-site.herokuapp.com/github_webhooks")
+
       rescue => e
         flash[:error] = e.message
       end
