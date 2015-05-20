@@ -95,7 +95,10 @@ class SurveillanceController < ApplicationController
           end
         end
 
-        puts @client.subscribe("https://github.com/#{@full_repo_name}/events/push.json", "http://surveillance-site.herokuapp.com/github_webhooks")
+        if Ngrok::Tunnel.stopped?
+          Ngrok::Tunnel.start(port: 3000)
+        end
+        puts @client.subscribe("https://github.com/#{@full_repo_name}/events/push.json", "#{Ngrok::Tunnel.ngrok_url}/github_webhooks")
 
       rescue => e
         flash[:error] = e.message
@@ -129,7 +132,9 @@ class SurveillanceController < ApplicationController
   end
 
   def hooks
-    puts "<<<<<<<<<<IM CALLED>>>>>>>>>>"
+    puts "WEBHOOK TRIGGERED"
+    puts params
+    render :status => 200
   end
 
   private

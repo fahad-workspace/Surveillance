@@ -99,6 +99,7 @@ group :production do
 
 end
 
+gem 'ngrok-tunnel'
 gem 'puma'
 gem 'pg'
 gem 'mysql2'
