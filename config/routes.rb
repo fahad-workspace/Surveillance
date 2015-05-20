@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'surveillance/auth' => 'surveillance#auth'
   get 'surveillance/signout' => 'surveillance#signout'
   get '/auth/github_oauth/callback' => 'surveillance#login'
+  post '/github_webhooks' => 'surveillance#hooks'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

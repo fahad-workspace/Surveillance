@@ -128,6 +128,10 @@ class SurveillanceController < ApplicationController
     redirect_to request.base_url, notice: 'Signed out!'
   end
 
+  def hooks
+    puts "<<<<<<<<<<IM CALLED>>>>>>>>>>"
+  end
+
   private
   def github_config
     Octokit.configure do |c|
