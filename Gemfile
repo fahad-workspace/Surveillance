@@ -99,7 +99,7 @@ group :production do
 
 end
 
-gem 'unicorn-rails'
+gem 'puma'
 gem 'pg'
 gem 'mysql2'
 gem 'haml-rails'
