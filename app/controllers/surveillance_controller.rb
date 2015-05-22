@@ -1,3 +1,5 @@
+require 'ngrok/tunnel'
+
 class SurveillanceController < ApplicationController
 
   before_filter :github_config
@@ -95,10 +97,14 @@ class SurveillanceController < ApplicationController
           end
         end
 
-        if Ngrok::Tunnel.stopped?
-          Ngrok::Tunnel.start(port: 3000)
+        if Rails.env == 'production' then
+          @client.subscribe("https://github.com/#{@full_repo_name}/events/push.json", "https://surveillance-site.herokuapp.com/github_webhooks")
+        else
+          if Ngrok::Tunnel.stopped?
+            Ngrok::Tunnel.start(port: 3000)
+          end
+          @client.subscribe("https://github.com/#{@full_repo_name}/events/*.json", "#{Ngrok::Tunnel.ngrok_url}/github_webhooks")
         end
-        puts @client.subscribe("https://github.com/#{@full_repo_name}/events/push.json", "#{Ngrok::Tunnel.ngrok_url}/github_webhooks")
 
       rescue => e
         flash[:error] = e.message
@@ -132,8 +138,6 @@ class SurveillanceController < ApplicationController
   end
 
   def hooks
-    puts "WEBHOOK TRIGGERED"
-    puts params
     render :status => 200
   end
 
