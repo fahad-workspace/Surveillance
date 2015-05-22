@@ -66,7 +66,7 @@ class SurveillanceController < ApplicationController
 
   def ngrok_server
     if Rails.env == 'production' then
-      @client.subscribe("https://github.com/#{@full_repo_name}/events/push.json", "https://surveillance-site.herokuapp.com/github_webhooks")
+      @client.subscribe("https://github.com/#{@full_repo_name}/events/*.json", "https://surveillance-site.herokuapp.com/github_webhooks")
     else
       if Ngrok::Tunnel.stopped?
         Ngrok::Tunnel.start(port: 3000)
