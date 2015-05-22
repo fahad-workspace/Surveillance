@@ -1,1 +1,1 @@
-web: bundle exec thin start -a localhost
+web: bundle exec thin start
