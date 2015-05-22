@@ -1,5 +1,3 @@
-require 'ngrok/tunnel'
-
 class SurveillanceController < ApplicationController
 
   before_filter :github_config
