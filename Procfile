@@ -1,1 +1,1 @@
-web: bundle exec thin start -C ./config/server.rb
+web: bundle exec thin start -p $PORT -a localhost
