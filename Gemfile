@@ -100,7 +100,8 @@ group :production do
 end
 
 gem 'ngrok-tunnel'
-gem 'puma'
+# gem 'puma'
+gem 'thin'
 gem 'pg'
 gem 'mysql2'
 gem 'haml-rails'
