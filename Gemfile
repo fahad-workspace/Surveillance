@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-ruby '2.1.5'
+ruby '2.1.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
@@ -107,3 +107,6 @@ gem 'mysql2'
 gem 'haml-rails'
 gem 'bootstrap-sass'
 gem 'octokit'
+gem 'rails_apps_pages'
+gem 'rails_apps_composer'
+gem 'rails_layout'
