@@ -68,12 +68,27 @@ class SurveillanceController < ApplicationController
     if Rails.env == 'production' then
       @client.subscribe("https://github.com/#{@full_repo_name}/events/*.json", "https://surveillance-site.herokuapp.com/github_webhooks")
     else
+      hooks = @client.hooks(@full_repo_name)
+      hooks.each do |hook|
+        if hook.config.url.include? 'ngrok.io/github_webhooks'
+          @client.remove_hook(@full_repo_name, hook.id)
+        end
+      end
       while (Ngrok::Tunnel.ngrok_url == '' || Ngrok::Tunnel.ngrok_url == nil)
         Ngrok::Tunnel.stop
         begin
           Ngrok::Tunnel.start(port: 3000)
         rescue
           Ngrok::Tunnel.stop
+        end
+      end
+      hooks = @client.hooks(@full_repo_name)
+      hooks.each do |hook|
+        if hook.config.url.include? 'ngrok.io/github_webhooks'
+          if hook.config.url.include? "#{Ngrok::Tunnel.ngrok_url}"
+          else
+            @client.remove_hook(@full_repo_name, hook.id)
+          end
         end
       end
       @client.subscribe("https://github.com/#{@full_repo_name}/events/*.json", "#{Ngrok::Tunnel.ngrok_url}/github_webhooks")
