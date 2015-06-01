@@ -127,7 +127,6 @@ class SurveillanceController < ApplicationController
       contribs.each do |contrib|
         individual_commit_count = 0
         cmts.each do |cmt|
-          m
           if contrib.id == cmt.author.id
             individual_commit_count = individual_commit_count + 1
           end

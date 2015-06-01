@@ -12,7 +12,6 @@
 /db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
-/log/*
 !/log/.keep
 /tmp
 
@@ -20,11 +19,6 @@
 capybara-*.html
 .rspec
 /log
-/log/**
-/tmp
-/tmp/**
-/db/*.sqlite3
-/db/*.sqlite3-journal
 /public/system
 /coverage/
 /spec/tmp
@@ -37,7 +31,6 @@ pickle-email-*.html
 # config/secrets.yml
 
 ## Environment normalisation:
-/.bundle
 /vendor/bundle
 
 # these should all be checked in to normalise the environment:
@@ -74,7 +67,6 @@ hg-checkexec-*
 .localized
 .keep
 .idea
-.idea/**
 .git
 .git/**
 
