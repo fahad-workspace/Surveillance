@@ -99,7 +99,7 @@
             h = a.renderTo.style.height;
             g = d.exporting.sourceWidth || d.chart.width || /px$/.test(g) && parseInt(g, 10) || 600;
             h = d.exporting.sourceHeight || d.chart.height || /px$/.test(h) &&
-            parseInt(h, 10) || 400;
+                parseInt(h, 10) || 400;
             q(d.chart, {animation: !1, renderTo: c, forExport: !0, width: g, height: h});
             d.exporting.enabled = !1;
             delete d.data;
@@ -228,7 +228,7 @@
                     "stroke-linecap": "round"
                 });
                 d.menuClassName = b.menuClassName ||
-                "highcharts-menu-" + a.btnCount++;
+                    "highcharts-menu-" + a.btnCount++;
                 c.symbol && (h = e.symbol(c.symbol, c.symbolX - j / 2, c.symbolY - j / 2, j, j).attr(q(m, {
                     "stroke-width": c.symbolStrokeWidth || 1,
                     zIndex: 1
